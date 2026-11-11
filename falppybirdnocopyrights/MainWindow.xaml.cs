@@ -22,6 +22,7 @@ namespace falppybirdnocopyrights
         private DispatcherTimer timer;
         private int maxhegit = 0;
         private int minhegit = 330;
+        private bool rain= false;
         public MainWindow()
         {
             InitializeComponent();
@@ -81,8 +82,40 @@ namespace falppybirdnocopyrights
                     ResetGame(bird, pipeTop, pipeBottom);
                 }
             }
-
             score++;
+            //---------------------------eso
+            
+            if (rain == true)
+            {
+                birdNewTop += 5;
+                GameCanvas.Background = new SolidColorBrush(Colors.DarkCyan);
+                if (new Random().Next(0, 100) < 2)
+                {
+                    Rectangle rain = new Rectangle
+                    {
+                        Width = 5,
+                        Height = 15,
+                        Fill = Brushes.Blue
+                    };
+                    Canvas.SetLeft(rain, new Random().Next(0, (int)GameCanvas.ActualWidth));
+                    Canvas.SetTop(rain, 0);
+                    GameCanvas.Children.Add(rain);
+                    DispatcherTimer rainTimer = new DispatcherTimer();
+                    rainTimer.Interval = TimeSpan.FromMilliseconds(20);
+                    rainTimer.Tick += (s, args) =>
+                    {
+                        double rainTop = Canvas.GetTop(rain);
+                        Canvas.SetTop(rain, rainTop + 5);
+                        if (rainTop > GameCanvas.ActualHeight)
+                        {
+                            GameCanvas.Children.Remove(rain);
+                            rainTimer.Stop();
+                        }
+                    };
+                    rainTimer.Start();
+                }
+            }
+            
         }
 
         private void ResetGame(Rectangle bird, Rectangle pipeTop, Rectangle pipeBottom)
@@ -92,6 +125,9 @@ namespace falppybirdnocopyrights
             Canvas.SetLeft(pipeTop, 500);
             Canvas.SetLeft(pipeBottom, 500);
             score = 0;
+            rain = false;
+            esos.IsEnabled = true;
+            GameCanvas.Background = new SolidColorBrush(Colors.LightBlue);
         }
 
 
@@ -104,7 +140,8 @@ namespace falppybirdnocopyrights
 
         private void Esos(object sender, RoutedEventArgs e)
         {
-
+            rain = true;
+            esos.IsEnabled = false;
         }
 
         private void Kodos(object sender, RoutedEventArgs e)
