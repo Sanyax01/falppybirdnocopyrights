@@ -7,29 +7,28 @@
         xmlns:local="clr-namespace:falppybirdnocopyrights"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Background="Black">
         <Canvas x:Name="GameCanvas" Background="LightBlue" Margin="0,58,0,0">
-            <Rectangle x:Name="Bird"   Width="30" Height="30" Canvas.Left="100" Canvas.Top="200">
+            <Rectangle x:Name="Bird"   Width="30" Height="30" Canvas.Left="100" Canvas.Top="200" StrokeThickness="3">
+                <Rectangle.Stroke>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF030EBF"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Rectangle.Stroke>
                 <Rectangle.Fill>
-                    <RadialGradientBrush>
-                        <GradientStop Color="#FF070A9E" Offset="0.439"/>
-                        <GradientStop Color="#FFFF1FD8" Offset="1"/>
-                        <GradientStop Color="#FF0C0FFF" Offset="0.5"/>
-                        <GradientStop Color="#FFD9E411" Offset="0"/>
-                        <GradientStop Color="#FFF3FF00" Offset="0.183"/>
-                        <GradientStop Color="#FF747908" Offset="0.419"/>
-                    </RadialGradientBrush>
+                    <ImageBrush ImageSource="/bird.png"/>
                 </Rectangle.Fill>
 
             </Rectangle>
-            <Rectangle x:Name="PipeTop" Width="50" Height="200" Fill="Green" Canvas.Left="400" Canvas.Top="0"/>
-            <Rectangle x:Name="PipeBottom" Width="50" Height="200" Fill="Green" Canvas.Left="400" Canvas.Top="300"/>
+            <Rectangle x:Name="PipeTop" Width="50" Height="200" Fill="Green" Canvas.Left="400" Canvas.Top="0" Stroke="#FF042303" StrokeThickness="10"/>
+            <Rectangle x:Name="PipeBottom" Width="50" Height="200" Fill="Green" Canvas.Left="400" Canvas.Top="300" StrokeThickness="10" Stroke="#FF042303"/>
             <TextBlock x:Name="ScoreText" Canvas.Left="21" TextWrapping="Wrap" Text="Pontszám: 0" Canvas.Top="14" Height="38" Width="88"/>
         </Canvas>
-        <Button Content="Start" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="43" Width="200" Click="Start"/>
-        <Button Content="Sima" HorizontalAlignment="Left" Margin="220,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Sima"/>
-        <Button x:Name="esos" Content="Esős" HorizontalAlignment="Left" Margin="400,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Esos"/>
-        <Button x:Name="kodos" Content="Ködös" HorizontalAlignment="Left" Margin="580,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Kodos"/>
-        <Button x:Name="jump" HorizontalAlignment="Left" Margin="755,32,0,0" VerticalAlignment="Top" Height="20" Width="45" Click="SpaceJump" BorderBrush="White" Background="White"/>
+        <Button Content="Start" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="43" Width="200" Click="Start" Background="#FF2ED220" BorderBrush="#FF0D4C08" BorderThickness="1,1,10,10"/>
+        <Button Content="Sima" HorizontalAlignment="Left" Margin="220,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Sima" BorderThickness="1,1,10,10"/>
+        <Button x:Name="esos" Content="Esős" HorizontalAlignment="Left" Margin="400,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Esos" Background="#FF2849CC" BorderBrush="#FF0A1952" BorderThickness="1,1,10,10"/>
+        <Button x:Name="kodos" Content="Ködös" HorizontalAlignment="Left" Margin="580,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Kodos" Background="#FF868686" BorderBrush="#FF2B2B2B" BorderThickness="1,1,10,10"/>
+        <Button x:Name="jump" HorizontalAlignment="Left" Margin="755,32,0,0" VerticalAlignment="Top" Height="20" Width="45" Click="SpaceJump" BorderBrush="Black" Background="Black"/>
     </Grid>
 </Window>
