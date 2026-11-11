@@ -136,7 +136,7 @@ namespace falppybirdnocopyrights
                     {
                         Width = 800,
                         Height = 600,
-                        Fill = new SolidColorBrush(Color.FromArgb(128, 200, 200, 200)) // félig átlátszó szürke
+                        Fill = new SolidColorBrush(Color.FromArgb(128, 200, 200, 200))
                     };
                     Canvas.SetLeft(fog, 0);
                     Canvas.SetTop(fog, 0);
@@ -197,7 +197,7 @@ namespace falppybirdnocopyrights
 
         private void SpaceJump(object sender, RoutedEventArgs e)
         {
-            // Az ugrás most állapotváltozás: negatív (felfelé mutató) sebességet ad a madárnak
+            
             if (rain == true) 
             {
                 birdVelocity = rainJumpStrength;
