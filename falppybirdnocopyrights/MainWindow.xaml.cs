@@ -23,6 +23,7 @@ namespace falppybirdnocopyrights
         private int maxhegit = 0;
         private int minhegit = 330;
         private bool rain= false;
+        private int ugras = 40;
         public MainWindow()
         {
             InitializeComponent();
@@ -87,7 +88,6 @@ namespace falppybirdnocopyrights
             
             if (rain == true)
             {
-                birdNewTop += 5;
                 GameCanvas.Background = new SolidColorBrush(Colors.DarkCyan);
                 if (new Random().Next(0, 100) < 2)
                 {
@@ -128,6 +128,7 @@ namespace falppybirdnocopyrights
             rain = false;
             esos.IsEnabled = true;
             GameCanvas.Background = new SolidColorBrush(Colors.LightBlue);
+            ugras = 40;
         }
 
 
@@ -157,7 +158,16 @@ namespace falppybirdnocopyrights
         private void SpaceJump(object sender, RoutedEventArgs e)
         {
             double FentLentPozicio = Canvas.GetTop(Bird);
-            FentLentPozicio -= 40;
+            if (rain == true) 
+            {
+                ugras = 20;
+                FentLentPozicio -= ugras;
+            }
+            else
+            {
+                FentLentPozicio -= ugras;
+            }
+
             Canvas.SetTop(Bird, FentLentPozicio);
             
         }
