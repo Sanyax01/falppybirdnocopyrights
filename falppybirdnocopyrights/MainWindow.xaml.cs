@@ -35,66 +35,63 @@ namespace falppybirdnocopyrights
             Mozog(Bird, PipeTop, PipeBottom);
         }
 
-        private void Mozog(Rectangle bird, Rectangle torony1, Rectangle torony2)
+        private void Mozog(Rectangle bird, Rectangle pipeTop, Rectangle pipeBottom)
         {
-            double Pozicio = Canvas.GetLeft(bird);
-            double torony1Pozicio = Canvas.GetLeft(torony1);
-            double torony2Pozicio = Canvas.GetLeft(torony2);
-            double toronySebesseg = 10;
-            double ujTorony1Pozicio = torony1Pozicio - toronySebesseg;
-            double ujTorony2Pozicio = torony2Pozicio - toronySebesseg;
-            Canvas.SetLeft(torony1, ujTorony1Pozicio);
-            Canvas.SetLeft(torony2, ujTorony2Pozicio);
-            if (ujTorony1Pozicio < -50)
+            double birdLeft = Canvas.GetLeft(bird);
+            double birdTop = Canvas.GetTop(bird);
+            double pipeLeft = Canvas.GetLeft(pipeTop);
+            double pipeSpeed = 10;
+            double newPipeLeft = pipeLeft - pipeSpeed;
+            Canvas.SetLeft(pipeTop, newPipeLeft);
+            Canvas.SetLeft(pipeBottom, newPipeLeft);
+
+
+            if (newPipeLeft < -50)
             {
-                Canvas.SetLeft(torony1, 800);
-                Canvas.SetLeft(torony2, 800);
-                Canvas.SetTop(torony2, new Random().Next(-120, 0));
-                Canvas.SetTop(torony1, Canvas.GetTop(torony2) + new Random().Next(280, 300));
+                Canvas.SetLeft(pipeTop, 800);
+                Canvas.SetLeft(pipeBottom, 800);
+                double topPipeBottomY = new Random().Next(-120, 0);
+                Canvas.SetTop(pipeTop, topPipeBottomY);
+
+                Canvas.SetTop(pipeBottom, topPipeBottomY + pipeTop.Height + new Random().Next(140, 180));
             }
 
-            double FentLentPozicio = Canvas.GetTop(bird);
-            FentLentPozicio += 5;
-            Canvas.SetTop(bird, FentLentPozicio);
-            if (FentLentPozicio <= maxhegit ) 
-            {
-                timer.Stop();
-                MessageBox.Show($"Vesztettél, eredmény: {score}");
-            }
-            if (FentLentPozicio >= minhegit)
-            {
-                timer.Stop();
-                MessageBox.Show($"Vesztettél, eredmény: {score}");
-            }
-            /*if 
-                (
-                    (Pozicio + bird.Width >= torony1Pozicio && Pozicio <= torony1Pozicio + torony1.Width && FentLentPozicio <= Canvas.GetTop(torony2) + torony2.Height) ||
-                    (Pozicio + bird.Width >= torony2Pozicio && Pozicio <= torony2Pozicio + torony2.Width && FentLentPozicio + bird.Height >= Canvas.GetTop(torony1))
-                )
-            {
-                timer.Stop();
-                MessageBox.Show($"Vesztettél, eredmény: {score}");
-                Canvas.SetLeft(bird, 0);
-                Canvas.SetLeft(torony1, 500);
-                Canvas.SetLeft(torony2, 500);
-                score = 0;
-            }*/
+            double birdNewTop = birdTop + 5;
+            Canvas.SetTop(bird, birdNewTop);
 
-            if (Canvas.GetLeft(torony1) < Canvas.GetLeft(bird) + bird.Width &&
-                Canvas.GetLeft(torony1) + torony1.Width > Canvas.GetLeft(bird) &&
-                (Canvas.GetTop(bird) < Canvas.GetTop(torony1) + torony1.Height ||
-                 Canvas.GetTop(bird) + bird.Height > Canvas.GetTop(torony2)))
+            if (birdNewTop <= maxhegit || birdNewTop >= minhegit)
             {
                 timer.Stop();
                 MessageBox.Show($"Vesztettél, eredmény: {score}");
-                Canvas.SetLeft(bird, 0);
-                Canvas.SetLeft(torony1, 500);
-                Canvas.SetLeft(torony2, 500);
-                score = 0;
+                ResetGame(bird, pipeTop, pipeBottom);
+                return;
             }
-           
 
-            score ++;
+            bool isInsideHorizontalBounds = (birdLeft + bird.Width > newPipeLeft) && (birdLeft < newPipeLeft + pipeTop.Width);
+
+            if (isInsideHorizontalBounds)
+            {
+                bool hitsTopPipe = birdNewTop < Canvas.GetTop(pipeTop) + pipeTop.Height;
+                bool hitsBottomPipe = birdNewTop + bird.Height > Canvas.GetTop(pipeBottom);
+
+                if (hitsTopPipe || hitsBottomPipe)
+                {
+                    timer.Stop();
+                    MessageBox.Show($"Vesztettél, eredmény: {score}");
+                    ResetGame(bird, pipeTop, pipeBottom);
+                }
+            }
+
+            score++;
+        }
+
+        private void ResetGame(Rectangle bird, Rectangle pipeTop, Rectangle pipeBottom)
+        {
+            Canvas.SetLeft(bird, 100);
+            Canvas.SetTop(bird, 150);
+            Canvas.SetLeft(pipeTop, 500);
+            Canvas.SetLeft(pipeBottom, 500);
+            score = 0;
         }
 
 
