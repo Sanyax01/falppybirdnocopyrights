@@ -18,12 +18,17 @@ namespace falppybirdnocopyrights
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int score = 0;
+        private double score = 0;
         private DispatcherTimer timer;
         private int maxhegit = 0;
         private int minhegit = 330;
-        private bool rain= false;
-        private int ugras = 40;
+        private bool rain = false;
+        private double birdVelocity = 0;       
+        private double gravity = 0.5;          
+        private double normalJumpStrength = -7; 
+        private double rainJumpStrength = -4;   
+        private bool kod = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -44,9 +49,9 @@ namespace falppybirdnocopyrights
             double pipeLeft = Canvas.GetLeft(pipeTop);
             double pipeSpeed = 10;
             double newPipeLeft = pipeLeft - pipeSpeed;
+            
             Canvas.SetLeft(pipeTop, newPipeLeft);
             Canvas.SetLeft(pipeBottom, newPipeLeft);
-
 
             if (newPipeLeft < -50)
             {
@@ -58,7 +63,9 @@ namespace falppybirdnocopyrights
                 Canvas.SetTop(pipeBottom, topPipeBottomY + pipeTop.Height + new Random().Next(140, 180));
             }
 
-            double birdNewTop = birdTop + 5;
+            
+            birdVelocity += gravity;                    // pici ai ez miatt
+            double birdNewTop = birdTop + birdVelocity; 
             Canvas.SetTop(bird, birdNewTop);
 
             if (birdNewTop <= maxhegit || birdNewTop >= minhegit)
@@ -66,7 +73,7 @@ namespace falppybirdnocopyrights
                 timer.Stop();
                 MessageBox.Show($"Vesztettél, eredmény: {score}");
                 ResetGame(bird, pipeTop, pipeBottom);
-                return;
+                
             }
 
             bool isInsideHorizontalBounds = (birdLeft + bird.Width > newPipeLeft) && (birdLeft < newPipeLeft + pipeTop.Width);
@@ -83,39 +90,69 @@ namespace falppybirdnocopyrights
                     ResetGame(bird, pipeTop, pipeBottom);
                 }
             }
-            score++;
+            if (Canvas.GetLeft(Bird) == Canvas.GetLeft(PipeTop) + PipeTop.Width)
+            {
+                score ++;
+                ScoreText.Text = $"Pontszám: {score}";
+            }
+
             //---------------------------eso
-            
             if (rain == true)
             {
                 GameCanvas.Background = new SolidColorBrush(Colors.DarkCyan);
-                if (new Random().Next(0, 100) < 2)
+                if (new Random().Next(0, 100) < 50)
                 {
-                    Rectangle rain = new Rectangle
+                    
+                    Rectangle raindrop = new Rectangle
                     {
                         Width = 5,
                         Height = 15,
                         Fill = Brushes.Blue
                     };
-                    Canvas.SetLeft(rain, new Random().Next(0, (int)GameCanvas.ActualWidth));
-                    Canvas.SetTop(rain, 0);
-                    GameCanvas.Children.Add(rain);
+                    Canvas.SetLeft(raindrop, new Random().Next(0, (int)GameCanvas.ActualWidth));
+                    Canvas.SetTop(raindrop, 0);
+                    GameCanvas.Children.Add(raindrop);
+                    
                     DispatcherTimer rainTimer = new DispatcherTimer();
                     rainTimer.Interval = TimeSpan.FromMilliseconds(20);
                     rainTimer.Tick += (s, args) =>
                     {
-                        double rainTop = Canvas.GetTop(rain);
-                        Canvas.SetTop(rain, rainTop + 5);
+                        double rainTop = Canvas.GetTop(raindrop);
+                        Canvas.SetTop(raindrop, rainTop + 5);
                         if (rainTop > GameCanvas.ActualHeight)
                         {
-                            GameCanvas.Children.Remove(rain);
+                            GameCanvas.Children.Remove(raindrop);
                             rainTimer.Stop();
                         }
                     };
                     rainTimer.Start();
                 }
             }
-            
+            if (kod == true)
+            {
+                if (new Random().Next(0, 100) < 1)
+                {
+                    Rectangle fog = new Rectangle
+                    {
+                        Width = 800,
+                        Height = 600,
+                        Fill = new SolidColorBrush(Color.FromArgb(128, 200, 200, 200)) // félig átlátszó szürke
+                    };
+                    Canvas.SetLeft(fog, 0);
+                    Canvas.SetTop(fog, 0);
+                    GameCanvas.Children.Add(fog);
+                    DispatcherTimer fogTimer = new DispatcherTimer();
+                    fogTimer.Interval = TimeSpan.FromMilliseconds(1000);
+                    fogTimer.Tick += (s, args) =>
+                    {
+                        GameCanvas.Children.Remove(fog);
+                        fogTimer.Stop();
+                    };
+                    fogTimer.Start();
+                }
+
+            }
+
         }
 
         private void ResetGame(Rectangle bird, Rectangle pipeTop, Rectangle pipeBottom)
@@ -128,15 +165,17 @@ namespace falppybirdnocopyrights
             rain = false;
             esos.IsEnabled = true;
             GameCanvas.Background = new SolidColorBrush(Colors.LightBlue);
-            ugras = 40;
+            birdVelocity = 0; 
         }
-
-
-        //-----------------------------------------------------------------
 
         private void Sima(object sender, RoutedEventArgs e)
         {
+            rain = false;
+            esos.IsEnabled = true;
+            GameCanvas.Background = new SolidColorBrush(Colors.LightBlue);
 
+            kod = false;
+            kodos.IsEnabled = true;
         }
 
         private void Esos(object sender, RoutedEventArgs e)
@@ -147,7 +186,8 @@ namespace falppybirdnocopyrights
 
         private void Kodos(object sender, RoutedEventArgs e)
         {
-
+            kod = true;
+            kodos.IsEnabled = false;
         }
 
         private void Start(object sender, RoutedEventArgs e)
@@ -157,19 +197,15 @@ namespace falppybirdnocopyrights
 
         private void SpaceJump(object sender, RoutedEventArgs e)
         {
-            double FentLentPozicio = Canvas.GetTop(Bird);
+            // Az ugrás most állapotváltozás: negatív (felfelé mutató) sebességet ad a madárnak
             if (rain == true) 
             {
-                ugras = 20;
-                FentLentPozicio -= ugras;
+                birdVelocity = rainJumpStrength;
             }
             else
             {
-                FentLentPozicio -= ugras;
+                birdVelocity = normalJumpStrength;
             }
-
-            Canvas.SetTop(Bird, FentLentPozicio);
-            
         }
     }
 }

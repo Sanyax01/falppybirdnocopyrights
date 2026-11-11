@@ -24,11 +24,12 @@
             </Rectangle>
             <Rectangle x:Name="PipeTop" Width="50" Height="200" Fill="Green" Canvas.Left="400" Canvas.Top="0"/>
             <Rectangle x:Name="PipeBottom" Width="50" Height="200" Fill="Green" Canvas.Left="400" Canvas.Top="300"/>
+            <TextBlock x:Name="ScoreText" Canvas.Left="21" TextWrapping="Wrap" Text="Pontszám: 0" Canvas.Top="14" Height="38" Width="88"/>
         </Canvas>
         <Button Content="Start" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="43" Width="200" Click="Start"/>
         <Button Content="Sima" HorizontalAlignment="Left" Margin="220,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Sima"/>
         <Button x:Name="esos" Content="Esős" HorizontalAlignment="Left" Margin="400,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Esos"/>
-        <Button Content="Ködös" HorizontalAlignment="Left" Margin="580,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Kodos"/>
+        <Button x:Name="kodos" Content="Ködös" HorizontalAlignment="Left" Margin="580,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Kodos"/>
         <Button x:Name="jump" HorizontalAlignment="Left" Margin="755,32,0,0" VerticalAlignment="Top" Height="20" Width="45" Click="SpaceJump" BorderBrush="White" Background="White"/>
     </Grid>
 </Window>
