@@ -8,8 +8,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Background="Black">
-        <Canvas x:Name="GameCanvas" Margin="0,58,0,0" Background="LightBlue">
-            <Rectangle x:Name="Bird"   Width="30" Height="30" Canvas.Left="100" Canvas.Top="200" StrokeThickness="3">
+        <Canvas x:Name="GameCanvas" Margin="0,58,0,0">
+            <Canvas.Background>
+                <ImageBrush ImageSource="/normal.png"/>
+            </Canvas.Background>
+            <Rectangle x:Name="Bird" Width="30" Height="30" Canvas.Left="100" Canvas.Top="200" StrokeThickness="3">
                 <Rectangle.Stroke>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF030EBF"/>
@@ -19,10 +22,7 @@
                 <Rectangle.Fill>
                     <ImageBrush ImageSource="/bird.png"/>
                 </Rectangle.Fill>
-
             </Rectangle>
-            <Rectangle x:Name="PipeTop" Width="50" Height="200" Fill="Green" Canvas.Left="400" Canvas.Top="0" Stroke="#FF042303" StrokeThickness="10"/>
-            <Rectangle x:Name="PipeBottom" Width="50" Height="200" Fill="Green" Canvas.Left="400" Canvas.Top="300" StrokeThickness="10" Stroke="#FF042303"/>
             <TextBlock x:Name="ScoreText" Canvas.Left="21" TextWrapping="Wrap" Text="Pontszám: 0" Canvas.Top="14" Height="38" Width="88"/>
         </Canvas>
         <Button Content="Start" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="43" Width="200" Click="Start" Background="#FF2ED220" BorderBrush="#FF0D4C08" BorderThickness="1,1,10,10"/>
@@ -30,6 +30,6 @@
         <Button x:Name="esos" Content="Esős" HorizontalAlignment="Left" Margin="400,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Esos" Background="#FF2849CC" BorderBrush="#FF0A1952" BorderThickness="1,1,10,10"/>
         <Button x:Name="kodos" Content="Ködös" HorizontalAlignment="Left" Margin="580,10,0,0" VerticalAlignment="Top" Height="43" Width="170" Click="Kodos" Background="#FF868686" BorderBrush="#FF2B2B2B" BorderThickness="1,1,10,10"/>
         <Button x:Name="jump" HorizontalAlignment="Left" Margin="805,32,0,0" VerticalAlignment="Top" Height="20" Width="45" Click="SpaceJump" BorderBrush="Black" Background="Black"/>
-        <Button x:Name="karacsony" Content="❄️" Margin="755,10,0,0" VerticalAlignment="Top" Height="42" Width="45" FontSize="24" Background="#FFE80E0E" BorderBrush="#FF250101" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" Padding="-3,-2.9,3,1" Foreground="#FFFFEAEA" BorderThickness="1,1,10,10" HorizontalAlignment="Center"/>
+        <Button x:Name="karacsony" Content="❄️" Margin="755,10,0,0" VerticalAlignment="Top" Height="42" Width="45" FontSize="24" Background="#FFE80E0E" BorderBrush="#FF250101" VerticalContentAlignment="Top" HorizontalContentAlignment="Left" Padding="-3,-2.9,3,1" Foreground="#FFFFEAEA" BorderThickness="1,1,10,10" HorizontalAlignment="Center" Click="Karacsony"/>
     </Grid>
 </Window>

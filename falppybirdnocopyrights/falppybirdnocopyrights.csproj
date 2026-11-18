@@ -10,10 +10,26 @@
 
   <ItemGroup>
     <None Remove="bird.png" />
+    <None Remove="eso.png" />
+    <None Remove="ho.png" />
+    <None Remove="kod.png" />
+    <None Remove="normal.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="bird.png" />
+    <Resource Include="eso.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="ho.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="kod.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="normal.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>
