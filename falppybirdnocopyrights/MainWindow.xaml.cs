@@ -38,6 +38,7 @@ namespace falppybirdnocopyrights
         
         private List<PipePair> pipePairs = new List<PipePair>();
         private double pipeSpeed = 10;
+        private double hopipeSpeed = 20;
 
         private Rectangle fog1 = new Rectangle
         {
@@ -263,7 +264,7 @@ namespace falppybirdnocopyrights
 
             if (Ho == true)
             {
-                pipeSpeed = 20;
+               
 
                 if (new Random().Next(0, 100) < 50)
                 {
@@ -351,7 +352,6 @@ namespace falppybirdnocopyrights
             rain = false;
             esos.IsEnabled = true;
             
-
             kod = false;
             kodos.IsEnabled = true;
 
@@ -392,6 +392,16 @@ namespace falppybirdnocopyrights
             else
             {
                 birdVelocity = normalJumpStrength;
+            }
+
+            if(Ho == true)
+            {
+                pipeSpeed = hopipeSpeed;
+
+            }
+            else
+            {
+                pipeSpeed = 10;
             }
         }
 
