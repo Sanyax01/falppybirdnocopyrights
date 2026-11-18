@@ -29,6 +29,13 @@ namespace falppybirdnocopyrights
         private double rainJumpStrength = -4;   
         private bool kod = false;
 
+        private Rectangle fog1 = new Rectangle
+        {
+            Width = 550,
+            Height = 600,
+            Fill = new SolidColorBrush(Color.FromArgb(250, 200, 200, 200))
+        };
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,7 +56,7 @@ namespace falppybirdnocopyrights
             double pipeLeft = Canvas.GetLeft(pipeTop);
             double pipeSpeed = 10;
             double newPipeLeft = pipeLeft - pipeSpeed;
-            
+
             Canvas.SetLeft(pipeTop, newPipeLeft);
             Canvas.SetLeft(pipeBottom, newPipeLeft);
 
@@ -63,9 +70,9 @@ namespace falppybirdnocopyrights
                 Canvas.SetTop(pipeBottom, topPipeBottomY + pipeTop.Height + new Random().Next(140, 180));
             }
 
-            
+
             birdVelocity += gravity;                    // pici ai ez miatt
-            double birdNewTop = birdTop + birdVelocity; 
+            double birdNewTop = birdTop + birdVelocity;
             Canvas.SetTop(bird, birdNewTop);
 
             if (birdNewTop <= maxhegit || birdNewTop >= minhegit)
@@ -73,7 +80,7 @@ namespace falppybirdnocopyrights
                 timer.Stop();
                 MessageBox.Show($"Vesztettél, eredmény: {score}");
                 ResetGame(bird, pipeTop, pipeBottom);
-                
+
             }
 
             bool isInsideHorizontalBounds = (birdLeft + bird.Width > newPipeLeft) && (birdLeft < newPipeLeft + pipeTop.Width);
@@ -92,7 +99,7 @@ namespace falppybirdnocopyrights
             }
             if (Canvas.GetLeft(Bird) == Canvas.GetLeft(PipeTop) + PipeTop.Width)
             {
-                score ++;
+                score++;
                 ScoreText.Text = $"Pontszám: {score}";
             }
 
@@ -102,7 +109,7 @@ namespace falppybirdnocopyrights
                 GameCanvas.Background = new SolidColorBrush(Colors.DarkCyan);
                 if (new Random().Next(0, 100) < 50)
                 {
-                    
+
                     Rectangle raindrop = new Rectangle
                     {
                         Width = 5,
@@ -112,7 +119,7 @@ namespace falppybirdnocopyrights
                     Canvas.SetLeft(raindrop, new Random().Next(0, (int)GameCanvas.ActualWidth));
                     Canvas.SetTop(raindrop, 0);
                     GameCanvas.Children.Add(raindrop);
-                    
+
                     DispatcherTimer rainTimer = new DispatcherTimer();
                     rainTimer.Interval = TimeSpan.FromMilliseconds(20);
                     rainTimer.Tick += (s, args) =>
@@ -128,9 +135,22 @@ namespace falppybirdnocopyrights
                     rainTimer.Start();
                 }
             }
+            
             if (kod == true)
             {
-                if (new Random().Next(0, 100) < 1)
+                //kod aze hogy utso pillanatba jojjon a pipőe
+                
+                Canvas.SetLeft(fog1, 250);
+                Canvas.SetTop(fog1, 0);
+                if (!GameCanvas.Children.Contains(fog1))
+                {
+                    GameCanvas.Children.Add(fog1);
+                }
+                GameCanvas.Background = new SolidColorBrush(Colors.DarkGray);
+
+
+                //kod 2 az eastetic-ért
+                if (new Random().Next(0, 100) < 2)
                 {
                     Rectangle fog = new Rectangle
                     {
@@ -150,8 +170,17 @@ namespace falppybirdnocopyrights
                     };
                     fogTimer.Start();
                 }
+                
 
             }
+            else if (kod == false)
+            {
+                if (GameCanvas.Children.Contains(fog1))
+                {
+                    GameCanvas.Children.Remove(fog1);
+                }
+            }
+            
 
         }
 
@@ -176,6 +205,7 @@ namespace falppybirdnocopyrights
 
             kod = false;
             kodos.IsEnabled = true;
+            
         }
 
         private void Esos(object sender, RoutedEventArgs e)
