@@ -9,6 +9,8 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
+using ColorConverter = System.Windows.Media.ColorConverter;
+using Point = System.Windows.Point;
 using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace falppybirdnocopyrights
@@ -44,7 +46,17 @@ namespace falppybirdnocopyrights
         {
             Width = 550,
             Height = 600,
-            Fill = new SolidColorBrush(Color.FromArgb(250, 200, 200, 200))
+            LayoutTransform = new RotateTransform(90),
+            Fill = new LinearGradientBrush
+            {
+                StartPoint = new Point(0.5, 0.7),
+                EndPoint = new Point(0.5, 1),
+                GradientStops = new GradientStopCollection
+                            {
+                                new GradientStop((Color)ColorConverter.ConvertFromString("#FF252525"), 0.0),
+                                new GradientStop((Color)ColorConverter.ConvertFromString("#07FFFFFF"), 1.0)
+                            }
+            }
         };
 
         public MainWindow()
@@ -319,7 +331,7 @@ namespace falppybirdnocopyrights
             }
             catch
             {
-                // Fallback color if image is missing so the app doesn't crash
+                // ha a kepek nem toltenenek be, tuff
                 return new ImageBrush(new BitmapImage());
             }
         }
@@ -341,7 +353,7 @@ namespace falppybirdnocopyrights
             esos.IsEnabled = true;
             
             birdVelocity = 0;
-            InitializePipes(); // Reset pipe positions
+            InitializePipes(); // csovek reset
             pipeSpeed = 10;
             string szo = "normal";
             GameCanvas.Background = Kepek(szo);
@@ -411,6 +423,9 @@ namespace falppybirdnocopyrights
             karacsony.IsEnabled = false;
             string szo = "ho";
             GameCanvas.Background = Kepek(szo);
+
+            
         }
+
     }
 }
